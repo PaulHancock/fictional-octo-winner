@@ -30,6 +30,10 @@ def make_positions():
     return ras, decs
 
 
+def clip_to_radius():
+    return
+
+
 def save_positions(ras, decs):
     # now write these to a csv file for use by my other program
     with open('catalog.csv','w', encoding='utf8') as f:
