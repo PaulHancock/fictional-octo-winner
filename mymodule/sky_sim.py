@@ -4,7 +4,6 @@
 from math import cos, pi
 from random import uniform
 
-
 NSRC = 1_000_000
 # from wikipedia
 RA_STR = '00:42:44.4'
@@ -27,18 +26,27 @@ def make_positions():
     for i in range(NSRC):
         ras.append(ra + uniform(-1,1))
         decs.append(dec + uniform(-1,1))
+    
+    # apply our filter
+    ras, decs = crop_to_circle(ras, decs, ra, dec, 1)
     return ras, decs
 
 
-def clip_to_radius():
-    return
+def crop_to_circle(ras, decs, ref_ra, ref_dec, radius):
+    ra_out = []
+    dec_out = []
+    for i in range(len(ras)):
+        if (ras[i]-ref_ra)**2 + (decs[i]-ref_dec)**2 <= radius**2:
+            ra_out.append(ras[i])
+            dec_out.append(ras[i])
+    return ra_out, dec_out
 
 
 def save_positions(ras, decs):
     # now write these to a csv file for use by my other program
     with open('catalog.csv','w', encoding='utf8') as f:
         print("id,ra,dec", file=f)
-        for i in range(NSRC):
+        for i in range(len(ras)):
             print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
 
 
