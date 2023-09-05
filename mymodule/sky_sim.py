@@ -4,7 +4,6 @@
 from math import cos, pi
 from random import uniform
 
-
 NSRC = 1_000_000
 # from wikipedia
 RA_STR = '00:42:44.4'
@@ -27,11 +26,20 @@ def make_positions():
     for i in range(NSRC):
         ras.append(ra + uniform(-1,1))
         decs.append(dec + uniform(-1,1))
+    
+    # apply our filter
+    ras, decs = crop_to_circle(ras,decs)
     return ras, decs
 
 
-def clip_to_radius():
-    return
+def crop_to_circle(ras, decs, ref_ra, ref_dec, radius):
+    ra_out = []
+    dec_out = []
+    for i in range(len(ras)):
+        if (ras[i]-ref_ra)**2 + (decs[i]-ref_dec)**2 <= radius**2:
+            ra_out.append(ras[i])
+            dec_out.append(ras[i])
+    return ra_out, dec_out
 
 
 def save_positions(ras, decs):
