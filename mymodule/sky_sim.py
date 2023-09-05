@@ -28,7 +28,7 @@ def make_positions():
         decs.append(dec + uniform(-1,1))
     
     # apply our filter
-    ras, decs = crop_to_circle(ras,decs)
+    ras, decs = crop_to_circle(ras, decs, ra, dec, 1)
     return ras, decs
 
 
@@ -46,7 +46,7 @@ def save_positions(ras, decs):
     # now write these to a csv file for use by my other program
     with open('catalog.csv','w', encoding='utf8') as f:
         print("id,ra,dec", file=f)
-        for i in range(NSRC):
+        for i in range(len(ras)):
             print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
 
 
