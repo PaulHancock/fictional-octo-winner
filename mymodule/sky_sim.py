@@ -32,20 +32,20 @@ def get_radec():
     h, m, s = andromeda_ra.split(':')
     ra = 15*(int(h)+int(m)/60+float(s)/3600)
     ra = ra/cos(dec*pi/180)
-    return ra,dec
+    return ra, dec
 
 
 def make_positions(ra, dec, nsrc=NSRC):
     """
-    Generate NSRC stars within 1 degree of the given ra/dec
+    Generate nsrc stars within 1 degree of the given ra/dec
 
     Parameters
     ----------
-    ra,dec : float
+    ra, dec : float
         The ra and dec in degrees for the central location.
     nsrc : int
         The number of star locations to generate.
-        Default = mymodule.sky_sim.NSRChttps://pad.carpentries.org/2023-ADACS-ECR-WOrkshop#L100
+        Default = mymodule.sky_sim.NSRC
     
     Returns
     -------
