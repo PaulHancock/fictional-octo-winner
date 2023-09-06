@@ -3,6 +3,7 @@
 
 from math import cos, pi
 from random import uniform
+import argparse
 
 NSRC = 1_000_000
 # from wikipedia
@@ -74,18 +75,46 @@ def crop_to_circle(ras, decs, ref_ra, ref_dec, radius):
     return ra_out, dec_out
 
 
-def save_positions(ras, decs):
+def save_positions(ras, decs, out='catalog.csv'):
     # now write these to a csv file for use by my other program
-    with open('catalog.csv','w', encoding='utf8') as f:
+    with open(out,'w', encoding='utf8') as f:
         print("id,ra,dec", file=f)
         for i in range(len(ras)):
             print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
 
 
+def skysim_parser():
+    """
+    Configure the argparse for skysim
+
+    Returns
+    -------
+    parser : argparse.ArgumentParser
+        The parser for skysim.
+    """
+    parser = argparse.ArgumentParser(prog='sky_sim', prefix_chars='-')
+    parser.add_argument('--ra', dest = 'ra', type=float, default=None,
+                        help="Central ra (degrees) for the simulation location")
+    parser.add_argument('--dec', dest = 'dec', type=float, default=None,
+                        help="Central dec (degrees) for the simulation location")
+    parser.add_argument('--out', dest='out', type=str, default='catalog.csv',
+                        help='destination for the output catalog')
+    return parser
+
+
 def main():
-    ra, dec = get_radec()
+    parser = skysim_parser()
+    options = parser.parse_args()
+
+    # if ra/dec are not supplied the use a default value
+    if None in [options.ra, options.dec]:
+        ra, dec = get_radec()
+    else:
+        ra = options.ra
+        dec = options.dec    
+    
     ras, decs = make_positions(ra, dec, NSRC)
-    save_positions(ras, decs)
+    save_positions(ras, decs, options.out)
 
 
 if __name__ == "__main__":
