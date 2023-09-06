@@ -4,3 +4,4 @@ catalog.csv
 *.pyc
 .coverage
 coverage/*
+.vscode/*
