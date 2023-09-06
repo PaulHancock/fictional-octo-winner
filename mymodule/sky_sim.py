@@ -10,7 +10,7 @@ RA_STR = '00:42:44.4'
 DEC_STR = '41:16:08'
 
 
-def make_positions():
+def get_radec():
     # convert to decimal degrees
     d, m, s = DEC_STR.split(':')
     dec = int(d)+int(m)/60+float(s)/3600
@@ -18,12 +18,14 @@ def make_positions():
     h, m, s = RA_STR.split(':')
     ra = 15*(int(h)+int(m)/60+float(s)/3600)
     ra = ra/cos(dec*pi/180)
+    return ra, dec
 
 
+def make_positions(ra, dec, nsrc=NSRC):
     # make 1000 stars within 1 degree of Andromeda
     ras = []
     decs = []
-    for i in range(NSRC):
+    for i in range(nsrc):
         ras.append(ra + uniform(-1,1))
         decs.append(dec + uniform(-1,1))
     
@@ -51,7 +53,8 @@ def save_positions(ras, decs):
 
 
 def main():
-    ras, decs = make_positions()
+    ra, dec = get_radec()
+    ras, decs = make_positions(ra, dec, NSRC)
     save_positions(ras, decs)
 
 
