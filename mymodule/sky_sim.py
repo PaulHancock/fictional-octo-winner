@@ -11,14 +11,28 @@ DEC_STR = '41:16:08'
 
 
 def get_radec():
-    # convert to decimal degrees
-    d, m, s = DEC_STR.split(':')
+    """
+    Generate the ra/dec coordinates of Andromeda
+    in decimal degrees.
+
+    Returns
+    -------
+    ra : float
+        The RA, in degrees, for Andromeda
+    dec : float
+        The DEC, in degrees for Andromeda
+    """
+    # from wikipedia
+    andromeda_ra = '00:42:44.3'
+    andromeda_dec = '41:16:09'
+
+    d, m, s = andromeda_dec.split(':')
     dec = int(d)+int(m)/60+float(s)/3600
 
-    h, m, s = RA_STR.split(':')
+    h, m, s = andromeda_ra.split(':')
     ra = 15*(int(h)+int(m)/60+float(s)/3600)
     ra = ra/cos(dec*pi/180)
-    return ra, dec
+    return ra,dec
 
 
 def make_positions(ra, dec, nsrc=NSRC):
