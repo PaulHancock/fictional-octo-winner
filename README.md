@@ -9,7 +9,7 @@ Generate a catalogue of sources (stars) such that:
 - The star ID and position should be saved in a csv file to be analyzed by other programs
 
 ## Installing
-Use `pip install git+<link>`, or download and run `pip install .`
+Use `pip install git+https://github.com/PaulHancock/fictional-octo-winner.git`, or download and run `pip install .`
 
 ## Usage
 `sky_sim` or `runme` are the two command line entry points.
